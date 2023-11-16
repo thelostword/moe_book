@@ -44,6 +44,12 @@ class _ReaderPageState extends State<ReaderPage> {
     if (_chapterId.isEmpty) getChapterContentFromSharedPreferences();
   }
 
+  // @override
+  // void dispose() {
+  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  //   super.dispose();
+  // }
+
   // 获取历史观看章节
   Future<void> getChapterContentFromSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -286,18 +292,6 @@ class _ReaderPageState extends State<ReaderPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // 处理夜间模式操作
-                      },
-                      child: const Column(
-                        children: [
-                          Icon(Icons.nightlight_round),
-                          SizedBox(width: 5),
-                          Text('夜间模式'),
-                        ],
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
                         // 处理设置操作
                       },
                       child: const Column(
@@ -330,7 +324,7 @@ class _ReaderPageState extends State<ReaderPage> {
           child: Text(
             _content,
             style: TextStyle(
-              color: Colors.grey.shade700,
+              color: Theme.of(context).brightness == Brightness.dark ? Colors.white38 : Colors.grey.shade700,
               fontSize: 18.0,
             ),
           ),

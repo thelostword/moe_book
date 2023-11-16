@@ -45,8 +45,12 @@ class _ContentsPageState extends State<ContentsPage> {
         itemBuilder: (context, index) {
           bool isHighlighted = context.read<ContentsProvider>().contents[index]['href'] == widget.chapterId;
           return ListTile(
-            title: Text(context.read<ContentsProvider>().contents[index]['title'] ?? '-'),
-            tileColor: isHighlighted ? Colors.pink.shade100 : null,
+            title: Text(
+              context.read<ContentsProvider>().contents[index]['title'] ?? '-',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            tileColor: isHighlighted ? (Theme.of(context).brightness == Brightness.dark ? Theme.of(context).primaryColorDark : Theme.of(context).primaryColorLight) : null,
             onTap: () {
               Navigator.pop(context, context.read<ContentsProvider>().contents[index]['href'] ?? '');
             },

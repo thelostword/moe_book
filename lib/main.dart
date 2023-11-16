@@ -3,7 +3,6 @@ import 'package:moe_book/provider.dart';
 import 'package:provider/provider.dart';
 import 'pages/home.dart';
 import 'pages/search.dart';
-import 'pages/profile.dart';
 
 
 void main() {
@@ -31,16 +30,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange.shade300),
-        primarySwatch: Colors.orange,
-        useMaterial3: true
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange.shade300),
-        primarySwatch: Colors.orange,
-        useMaterial3: true
-      ),
+      theme: ThemeData.light(useMaterial3: true),
+      darkTheme: ThemeData.dark(useMaterial3: true),
       themeMode: ThemeMode.system,
       home: const BottomTabBarExample(),
     );
@@ -60,7 +51,6 @@ class _BottomTabBarExampleState extends State<BottomTabBarExample> {
   final List<Widget> _pages = [
     const HomePage(),
     const SearchPage(),
-    const ProfilePage(),
   ];
 
   void _onTabTapped(int index) {
@@ -87,10 +77,6 @@ class _BottomTabBarExampleState extends State<BottomTabBarExample> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: '搜索',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: '我的',
           ),
         ],
       ),
