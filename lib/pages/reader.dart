@@ -44,12 +44,6 @@ class _ReaderPageState extends State<ReaderPage> {
     if (_chapterId.isEmpty) getChapterContentFromSharedPreferences();
   }
 
-  // @override
-  // void dispose() {
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  //   super.dispose();
-  // }
-
   // 获取历史观看章节
   Future<void> getChapterContentFromSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -166,13 +160,9 @@ class _ReaderPageState extends State<ReaderPage> {
       _loading = false;
     });
 
-    if (_scrollController.hasClients) {
-      _scrollController.animateTo(
-        0.0,
-        duration: const Duration(milliseconds: 100),
-        curve: Curves.easeOut,
-      );
-    }
+    // if (_scrollController.hasClients) {
+    //   _scrollController.jumpTo(0);
+    // }
   }
 
   // 上一章
@@ -213,11 +203,14 @@ class _ReaderPageState extends State<ReaderPage> {
   void _showBottomSheet() {
     showModalBottomSheet(
       context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(0.0))
+      ),
       builder: (BuildContext context) {
         return SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(5.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
@@ -226,6 +219,7 @@ class _ReaderPageState extends State<ReaderPage> {
                   children: <Widget>[
                     TextButton(
                       onPressed: () {
+                        Navigator.of(context).pop();
                         // 处理上一页操作
                         _prevData();
                       },
@@ -239,6 +233,7 @@ class _ReaderPageState extends State<ReaderPage> {
                     ),
                     TextButton(
                       onPressed: () {
+                        Navigator.of(context).pop();
                         _refreshData();
                       },
                       child: const Row(
@@ -251,6 +246,7 @@ class _ReaderPageState extends State<ReaderPage> {
                     ),
                     TextButton(
                       onPressed: () {
+                        Navigator.of(context).pop();
                         // 处理下一页操作
                         _nextData();
                       },
@@ -264,11 +260,11 @@ class _ReaderPageState extends State<ReaderPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    ElevatedButton(
+                    TextButton(
                       onPressed: () async {
                         Navigator.of(context).pop();
                         final String? result = await Navigator.push(
@@ -284,19 +280,31 @@ class _ReaderPageState extends State<ReaderPage> {
                       },
                       child: const Column(
                         children: [
-                          Icon(Icons.menu),
+                          Icon(Icons.menu_book_outlined),
                           SizedBox(width: 5),
                           Text('目录'),
                         ],
                       ),
                     ),
-                    ElevatedButton(
+                    TextButton(
                       onPressed: () {
                         // 处理设置操作
                       },
                       child: const Column(
                         children: [
-                          Icon(Icons.settings),
+                          Icon(Icons.dark_mode_outlined),
+                          SizedBox(width: 5),
+                          Text('夜间'),
+                        ],
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        // 处理设置操作
+                      },
+                      child: const Column(
+                        children: [
+                          Icon(Icons.settings_outlined),
                           SizedBox(width: 5),
                           Text('设置'),
                         ],
@@ -324,7 +332,7 @@ class _ReaderPageState extends State<ReaderPage> {
           child: Text(
             _content,
             style: TextStyle(
-              color: Theme.of(context).brightness == Brightness.dark ? Colors.white38 : Colors.grey.shade700,
+              color: Theme.of(context).brightness == Brightness.dark ? Colors.white54 : Colors.grey.shade700,
               fontSize: 18.0,
             ),
           ),
@@ -350,5 +358,12 @@ class _ReaderPageState extends State<ReaderPage> {
       ),
       // backgroundColor: theme.brightness == Brightness.light? Colors.white : Colors.black,
     );
+  }
+
+  @override
+  void dispose() {
+    // 在小部件被销毁时释放ScrollController
+    _scrollController.dispose();
+    super.dispose();
   }
 }

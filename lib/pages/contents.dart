@@ -27,16 +27,12 @@ class _ContentsPageState extends State<ContentsPage> {
   }
 
   void _scrollToId(String id) {
-  // 使用ListView的ScrollController来滚动到指定位置
-  final index = context.read<ContentsProvider>().contents.indexWhere((item) => item['href'] == id);
-  if (index != -1) {
-    _scrollController.animateTo(
-      index * kToolbarHeight,
-      duration: const Duration(milliseconds: 100),
-      curve: Curves.easeInOut,
-    );
+    // 使用ListView的ScrollController来滚动到指定位置
+    final index = context.read<ContentsProvider>().contents.indexWhere((item) => item['href'] == id);
+    if (index != -1) {
+      _scrollController.jumpTo(index * kToolbarHeight);
+    }
   }
-}
 
   Widget _buildContent() {
     if (context.read<ContentsProvider>().contents.isNotEmpty) {
@@ -75,5 +71,12 @@ class _ContentsPageState extends State<ContentsPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // 在小部件被销毁时释放ScrollController
+    _scrollController.dispose();
+    super.dispose();
   }
 }

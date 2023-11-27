@@ -111,6 +111,7 @@ class _ResultPageState extends State<ResultPage> {
                             ),
                             Expanded(
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(snapshot.data![index]['updateTime'] ?? '', style: TextStyle(color: Colors.grey.shade500)),
                                   const SizedBox(width: 8),
